@@ -111,11 +111,6 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
         }
     }
 
-    private static void drawArc(Graphics2D g, ScreenConverter screenConverter, Circle circle) {
-        ScreenPoint firstPoint = screenConverter.convertRealToScreen(circle.getFirstPoint());
-        ScreenPoint secondPoint = screenConverter.convertRealToScreen(circle.getSecondPoint());
-    }
-
     private static void drawLine(Graphics2D g, ScreenConverter screenConverter, Line line) {
         ScreenPoint firstPoint = screenConverter.convertRealToScreen(line.getFirstPoint());
         ScreenPoint secondPoint = screenConverter.convertRealToScreen(line.getSecondPoint());
@@ -232,35 +227,15 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                     editingCircle = circle;
                     onEditCircle(circle);
                     editingLine = x;
-
                 } else {
                     RealPoint point1 = screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY()));
                     currentLine = new Line(point1, point1);
                     currentCircle = new Circle(point1, point1);
                 }
             }
-//            if (editingLine == null) {
-//                Line x = findTheNearestLine(screenConverter, lines, new ScreenPoint(e.getX(), e.getY()), 3);
-//                if (x != null) {
-//                    editingLine = x;
-//                } else {
-//                    RealPoint point = screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY()));
-//                    currentLine = new Line(point, point);
-//                }
-//            }
             else {
-
-//                if (editingCircle != null && editingLine != null) {
-//                    RealPoint point2 = screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY()));
-//                    editingCircle.setSecondPoint(point2);                                                             Альтернативу написал в mouseDragged и MouseReleased,
-//                                                                                                                         чтобы было плавное изменение радиуса
-//                    editingLine.setSecondPoint(point2);
-//                }
-
                 if (editingLine != null) {
-                    //lines.remove(editingLine);
-//                    RealPoint point3 = screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY()));         Для рисования хорды
-//                    currentLine = new Line(point3, point3);
+
                 }
                 cancelEdit();
             }
@@ -283,10 +258,6 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                 lines.add(currentLine);
                 currentLine = null;
             }
-//            if (editingCircle != null && editingLine != null) {
-//                editingLine.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));
-//                editingCircle.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));        Когда все выделено, могли зажимать и тянуть, изменяя радиус окружности
-//            }
             if (editingLine != null) {
                 editingLine.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));
                 editingCircle.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));
@@ -307,12 +278,6 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                     cancelEdit();
                 }
             }
-//            if (editingLine != null) {
-//                if (closeToLine(screenConverter, editingLine, new ScreenPoint(e.getX(), e.getY()), 4)) {
-//                    lines.remove(editingLine);
-//                    editingLine = null;
-//                }
-//            }
         }
         repaint();
 
@@ -343,16 +308,7 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                 currentCircle.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));
             }
         } else if (SwingUtilities.isLeftMouseButton(e)) {
-
-//            if (editingCircle != null) {
-//                editingLine.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));
-//                editingCircle.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));   ?????
-//            }
-
-//            if (currentLine != null) {
-//                currentLine.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));
-//            } else
-                if (editingLine != null) {
+            if (editingLine != null) {
                 editingLine.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));
                 editingCircle.setSecondPoint(screenConverter.convertScreenToReal(new ScreenPoint(e.getX(), e.getY())));
             }
